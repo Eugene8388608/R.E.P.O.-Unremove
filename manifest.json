@@ -1,0 +1,9 @@
+{
+    "name": "Unremove",
+    "description": "Enables unreleased shop items. Host-only mod",
+    "version_number": "0.0.0",
+    "dependencies": [
+        "BepInEx-BepInExPack-5.4.2305"
+    ],
+    "website_url": "https://github.com/Eugene8388608/R.E.P.O.-Unremove"
+}
