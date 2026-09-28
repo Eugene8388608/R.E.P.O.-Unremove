@@ -1,11 +1,12 @@
-﻿using BepInEx;
+﻿using System.Linq;
+using BepInEx;
 using BepInEx.Logging;
 // using HarmonyLib;
 using UnityEngine;
 
 namespace Unremove;
 
-[BepInPlugin("Eugene8388608.Unremove", "Unremove", "0.0.0")]
+[BepInPlugin("Eugene8388608.Unremove", "Unremove", "0.0.1")]
 public class Unremove : BaseUnityPlugin
 {
     internal static Unremove Instance { get; private set; } = null!;
@@ -24,6 +25,40 @@ public class Unremove : BaseUnityPlugin
         // Patch();
 
         Logger.LogInfo($"{Info.Metadata.GUID} v{Info.Metadata.Version} has loaded!");
+    }
+
+    // ts is broken af
+    private Item CreateThrowUpgrade()
+    {
+        var item = ScriptableObject.CreateInstance<Item>();
+        var value = ScriptableObject.CreateInstance<Value>();
+        value.valueMin = 250;
+        value.valueMax = 500;
+
+        item.disabled            = true;
+        item.name = "Item upgrade throwussy";
+        item.itemName            = "throwussy";
+        // item.itemNameLocalized   = LocalizedAsset;
+        // item.description         = string;
+        item.itemType            = SemiFunc.itemType.item_upgrade;
+        // item.emojiIcon           = SemiFunc.emojiIcon;
+        item.itemVolume          = SemiFunc.itemVolume.upgrade;
+        // item.itemSecretShopType  = SemiFunc.itemSecretShopType;
+        // item.colorPreset         = ColorPresets;
+        item.prefab              = new PrefabRef{resourcePath = "Items/Item Upgrade Player Grab Throw"};
+        item.value               = value;
+        item.maxAmount           = 10;
+        item.maxAmountInShop     = 10;
+        // item.minPlayerCount      = int;
+        // item.maxPurchase         = bool;
+        // item.maxPurchaseAmount   = int;
+        // item.spawnRotationOffset = Quaternion;
+        // item.physicalItem        = bool;
+
+        // TODO: add ItemAttributes
+        // item.AddComponent
+
+        return item;
     }
 
     // internal void Patch()
@@ -49,12 +84,17 @@ public class Unremove : BaseUnityPlugin
         itemsUnremoved = true;
         nuint count = 0;
 
-        foreach (var item in Resources.LoadAll<Item>("Items" /* or "Items/Removed Items" */))
+        var items = Resources.LoadAll<Item>(
+            "Items" /* or "Items/Removed Items" */
+        )
+        .Where(item => item.disabled)
+        .Append(CreateThrowUpgrade())
+        ;
+
+        foreach (var item in items)
         {
             try
             {
-                if (!item.disabled) continue;
-
                 // This is NOT how you add a custom Item to the game
                 // Please refer to https://repomods.com/apis/repolib/overview.html
                 item.disabled = false;
@@ -69,5 +109,9 @@ public class Unremove : BaseUnityPlugin
             }
         }
         Logger.LogInfo($"Enabled {count} removed items");
+
+        // TODO: fix icon on magnet orb
+        // var magnet = StatsManager.instance.itemDictionary["Item Orb Magnet"];
+        // magnet.GameObject
     }
 }
