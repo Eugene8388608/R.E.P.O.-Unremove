@@ -7,7 +7,7 @@ using UnityEngine;
 
 namespace Unremove;
 
-[BepInPlugin("Eugene8388608.Unremove", "Unremove", "0.0.1")]
+[BepInPlugin("Eugene8388608.Unremove", "Unremove", "0.1.0")]
 public class Unremove : BaseUnityPlugin
 {
     internal static Unremove Instance { get; private set; } = null!;
