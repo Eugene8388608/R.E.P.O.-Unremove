@@ -27,36 +27,43 @@ public class Unremove : BaseUnityPlugin
         Logger.LogInfo($"{Info.Metadata.GUID} v{Info.Metadata.Version} has loaded!");
     }
 
-    // ts is broken af
     private Item CreateThrowUpgrade()
     {
         var item = ScriptableObject.CreateInstance<Item>();
-        var value = ScriptableObject.CreateInstance<Value>();
-        value.valueMin = 250;
-        value.valueMax = 500;
 
-        item.disabled            = true;
-        item.name = "Item upgrade throwussy";
-        item.itemName            = "throwussy";
-        // item.itemNameLocalized   = LocalizedAsset;
-        // item.description         = string;
-        item.itemType            = SemiFunc.itemType.item_upgrade;
-        // item.emojiIcon           = SemiFunc.emojiIcon;
-        item.itemVolume          = SemiFunc.itemVolume.upgrade;
-        // item.itemSecretShopType  = SemiFunc.itemSecretShopType;
-        // item.colorPreset         = ColorPresets;
-        item.prefab              = new PrefabRef{resourcePath = "Items/Item Upgrade Player Grab Throw"};
-        item.value               = value;
-        item.maxAmount           = 10;
-        item.maxAmountInShop     = 10;
-        // item.minPlayerCount      = int;
-        // item.maxPurchase         = bool;
-        // item.maxPurchaseAmount   = int;
-        // item.spawnRotationOffset = Quaternion;
-        // item.physicalItem        = bool;
+        item.itemName        = "Throw Upgrade";
+        item.itemType        = SemiFunc.itemType.item_upgrade;
+        item.itemVolume      = SemiFunc.itemVolume.upgrade;
+        item.prefab          = new PrefabRef{resourcePath = "Items/Item Upgrade Player Grab Throw"};
+        item.value           = ScriptableObject.CreateInstance<Value>();
+        item.value.valueMin  = 250;
+        item.value.valueMax  = 500;
+        item.maxAmount       = 10;
+        item.maxAmountInShop = 10;
 
-        // TODO: add ItemAttributes
-        // item.AddComponent
+        var go = item.prefab.Prefab;
+        // Consider patching instances of this GameObject
+        // instead of relying on the prefab being cached
+        go.hideFlags = HideFlags.HideAndDontSave;
+
+        item.name = go.name;
+
+        // The following is the reason this mod is NOT host-only
+        // Other players will see the Upgrade box, but they won't
+        // be able to grab or use it. They also won't see it being
+        // carried away by host player, i.e. they won't see the new
+        // position of the box
+        var ia = go.GetComponent<ItemAttributes>();
+        ia.item = item;
+        ia.enabled = true;
+        go.GetComponent<PhysGrabObject>().enabled = true;
+        go.GetComponent<ItemUpgrade>().enabled = true;
+        go.GetComponent<Photon.Pun.PhotonTransformView>().enabled = true;
+        go.GetComponent<NotValuableObject>().enabled = true;
+        go.GetComponent<RoomVolumeCheck>().enabled = true;
+        go.GetComponent<PhysGrabObjectImpactDetector>().enabled = true;
+        go.GetComponent<LineBetweenTwoPoints>().enabled = true;
+        go.GetComponent<MapCustom>().enabled = true;
 
         return item;
     }
