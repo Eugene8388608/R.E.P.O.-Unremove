@@ -1,7 +1,7 @@
 {
     "name": "Unremove",
-    "description": "Enables unreleased shop items. Host-only mod",
-    "version_number": "0.0.0",
+    "description": "Enables unreleased shop items. Host-only mod (mostly)",
+    "version_number": "0.1.0",
     "dependencies": [
         "BepInEx-BepInExPack-5.4.2305"
     ],
