@@ -1,3 +1,10 @@
+## [0.3.0] - 2026-10-25
+* Unremoved `Module - Museum - N - 2 - Basement Gallery` and `Module - Museum - N - 2 - Smaller rooms and stairs wip`.
+* Unremoved `Module - Manor - N - 2 - Dining Hall 2` and `Module - Museum - N - 1 - Monika's Room` as debug-only modules.
+* Config option to enable `Start Room - Manor - TV Room` as it is lacking an extraction point.
+* Lowered max amount of Throw Upgrades in shop from 10 to 3.
+* Split one big source code file.
+
 ## [0.2.0] - 2026-10-08
 * Rewritten using Harmony postfixes.
 * Config option "Add Technically Disabled Items". As of R.E.P.O v0.4.4 just adds single Walkie Talkies.

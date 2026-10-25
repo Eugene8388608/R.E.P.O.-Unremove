@@ -4,8 +4,8 @@
     <TargetFramework>netstandard2.1</TargetFramework>
     <LangVersion>12</LangVersion>
     <Nullable>enable</Nullable>
-    <Authors>Eugene8388608</Authors>
-    <Version>0.0.0</Version>
+    <Authors>SausageCake</Authors>
+    <Version>0.3.0</Version>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
 
