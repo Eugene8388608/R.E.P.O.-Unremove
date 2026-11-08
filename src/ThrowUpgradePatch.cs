@@ -3,15 +3,18 @@ using Photon.Pun;
 
 namespace Unremove;
 
-[HarmonyPatch(typeof(ItemUpgradePlayerGrabThrow), nameof(ItemUpgradePlayerGrabThrow.Start))]
-static class ItemUpgradePlayerGrabThrowPatch
+// This patch is the reason this mod is NOT host-only
+
+[HarmonyPatch(typeof(ItemAttributes), nameof(ItemAttributes.Awake))]
+static class ThrowUpgradePatch
 {
-    static void Postfix(ItemUpgradePlayerGrabThrow __instance)
+    static void Prefix(ItemAttributes __instance)
     {
-        // The following is the reason this mod is NOT host-only
-        var ia = __instance.GetComponent<ItemAttributes>();
-        ia.item = ThrowUpgradeItemFactory.Item;
-        ia.enabled = true;
+        if (!__instance.GetComponent<ItemUpgradePlayerGrabThrow>())
+            return;
+
+        __instance.item = ThrowUpgradeItemFactory.Item;
+        __instance.enabled = true;
         __instance.GetComponent<PhysGrabObject>().enabled = true;
         __instance.GetComponent<ItemUpgrade>().enabled = true;
         __instance.GetComponent<PhotonTransformView>().enabled = true;
