@@ -1,4 +1,5 @@
-﻿using HarmonyLib;
+﻿using System.Collections.Generic;
+using HarmonyLib;
 
 namespace Unremove;
 
@@ -15,64 +16,61 @@ static class RunManagerPatch
             AccessTools.Method(typeof(RunManagerPatch), nameof(Postfix))
         );
 
-        // these should run just once
+        // these should be run just once
+        PatchArcticStuff(__instance);
         PatchManorStuff(__instance);
         PatchMuseumStuff(__instance);
-        AddDebugModules(__instance);
+    }
+
+    static void PatchArcticStuff(RunManager rm)
+    {
+        var arctic = Find(rm.levels, "Level - Arctic");
+
+        arctic?.ModulesMega1.Add(Unremove.Ref(
+            "Level/Arctic/Modules/Module - Arctic - M - 1 - Cargo Central"
+        ));
+
+        arctic?.ModulesNormal3.Add(Unremove.Ref(
+            "Level/Arctic/Modules/Module - Arctic - N - 3 - Sector S"
+        ));
+
+        arctic?.ModulesPassage2.Add(Unremove.Ref(
+            "Level/Arctic/Modules/Module - Arctic - P - 2 - Frozen Medbay"
+        ));
     }
 
     static void PatchManorStuff(RunManager rm)
     {
-        const string levelname = "Level - Manor";
-        var level = rm.levels.Find(x => x.name == levelname);
-        if (!level)
-        {
-            Unremove.Logger.LogError($"{levelname} not found");
-            return;
-        }
+        var manor = Find(rm.levels, "Level - Manor");
+        if (!manor) return;
 
         if (Unremove.Instance.configAddManorTVStartRoom.Value)
-            level.StartRooms.Add(Unremove.Ref(
+            manor.StartRooms.Add(Unremove.Ref(
                 "Level/Manor/Start Room/Start Room - Manor - TV Room"
             ));
 
-        const string presetname = "Valuables - Manor";
-        var preset = level.ValuablePresets.Find(x => x.name == presetname);
-        if (!preset)
-        {
-            Unremove.Logger.LogError($"{presetname} not found");
-            return;
-        }
-
-        preset.medium.Add(Unremove.Ref(
+        Find(manor.ValuablePresets, "Valuables - Manor")
+        ?.medium.Add(Unremove.Ref(
             "Valuables/03 Medium/Valuable Manor Marble Table"
         ));
     }
 
     static void PatchMuseumStuff(RunManager rm)
     {
-        const string levelname = "Level - Museum";
-        var level = rm.levels.Find(x => x.name == levelname);
-        if (!level)
-        {
-            Unremove.Logger.LogError($"{levelname} not found");
-            return;
-        }
-
-        level.ModulesNormal2.AddRange([
-            Unremove.Ref("Level/Museum/Modules/Module - Museum - N - 2 - Basement Gallery"),
-            Unremove.Ref("Level/Museum/Modules/Module - Museum - N - 2 - Smaller rooms and stairs wip")
-        ]);
+        Find(rm.levels, "Level - Museum")
+        ?.ModulesNormal2.AddRange(Unremove.Refs(
+            "Level/Museum/Modules/Module - Museum - N - 2 - Basement Gallery",
+            "Level/Museum/Modules/Module - Museum - N - 2 - Smaller rooms and stairs wip"
+        ));
     }
 
-    static void AddDebugModules(RunManager rm)
+    static T? Find<T>(List<T> list, string name)
+    where T : UnityEngine.Object
     {
-        rm.debugModules.AddRange([
-            // walls are missing sometimes, obstructed valuables, missing props, too dark
-            Unremove.Ref("Level/Manor/Modules/Module - Manor - N - 2 - Dining Hall 2"),
+        T obj = list.Find(x => x.name == name);
 
-            // no valuables
-            Unremove.Ref("Level/Museum/Modules/Module - Museum - N - 1 - Monika's Room")
-        ]);
+        if (!obj) Unremove.Logger.LogError($"{name} not found");
+
+        return obj;
     }
 }

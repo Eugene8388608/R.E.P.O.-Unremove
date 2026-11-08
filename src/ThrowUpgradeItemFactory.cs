@@ -10,7 +10,7 @@ static class ThrowUpgradeItemFactory
         get
         {
             if (!_item) Instantiate();
-            return _item;
+            return _item!;
         }
     }
 
