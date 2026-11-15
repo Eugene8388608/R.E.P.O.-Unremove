@@ -1,0 +1,25 @@
+# parts from https://github.com/dotnet/roslyn/blob/47f4f56c7f56dc46a627570540a1a57122708f5b/.editorconfig
+# EditorConfig is awesome: https://EditorConfig.org
+
+# top-most EditorConfig file
+root = true
+
+# Don't use tabs for indentation.
+[*]
+indent_style = space
+end_of_line = lf
+trim_trailing_whitespace = true
+# (Please don't specify an indent_size here; that has too many unintended consequences.)
+
+[*.md]
+trim_trailing_whitespace = false
+
+# Code files
+[*.cs]
+indent_size = 4
+insert_final_newline = true
+charset = utf-8-bom
+
+# XML project files
+[*.csproj]
+indent_size = 2

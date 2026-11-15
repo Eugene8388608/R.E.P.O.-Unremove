@@ -5,6 +5,7 @@ namespace Unremove;
 
 // This patch is the reason this mod is NOT host-only
 
+[HarmonyWrapSafe]
 [HarmonyPatch(typeof(ItemAttributes), nameof(ItemAttributes.Awake))]
 static class ThrowUpgradePatch
 {

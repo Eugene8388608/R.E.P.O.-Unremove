@@ -3,6 +3,7 @@ using HarmonyLib;
 
 namespace Unremove;
 
+[HarmonyWrapSafe]
 [HarmonyPatch(typeof(RunManager), nameof(RunManager.Awake))]
 static class RunManagerPatch
 {
@@ -20,6 +21,7 @@ static class RunManagerPatch
         PatchArcticStuff(__instance);
         PatchManorStuff(__instance);
         PatchMuseumStuff(__instance);
+        PatchShopStuff(__instance);
     }
 
     static void PatchArcticStuff(RunManager rm)
@@ -62,6 +64,24 @@ static class RunManagerPatch
             "Level/Museum/Modules/Module - Museum - N - 2 - Basement Gallery",
             "Level/Museum/Modules/Module - Museum - N - 2 - Smaller rooms and stairs wip"
         ));
+    }
+
+    static readonly string[] vanillaShops = [
+        "Level - Shop Forest",
+        "Level - Shop Harbor",
+        "Level - Shop Wasteland",
+        "Level - Shop Suburb",
+        "Level - Shop Dead Forest"
+    ];
+
+    static void PatchShopStuff(RunManager rm)
+    {
+        var pr = Unremove.Ref(
+            "Level/Shop/Modules/Module - Shop - DE - Barricaded Door"
+        );
+
+        foreach (var name in vanillaShops)
+            Find(rm.levelShop, name)?.ModulesDeadEnd1.Add(pr);
     }
 
     static T? Find<T>(List<T> list, string name)

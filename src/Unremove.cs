@@ -8,7 +8,7 @@ using UnityEngine;
 
 namespace Unremove;
 
-[BepInPlugin("Eugene8388608.Unremove", "Unremove", "0.4.0")]
+[BepInPlugin("Eugene8388608.Unremove", "Unremove", "0.5.0")]
 public class Unremove : BaseUnityPlugin
 {
     internal static Unremove Instance { get; private set; } = null!;
@@ -29,7 +29,7 @@ public class Unremove : BaseUnityPlugin
         this.gameObject.transform.parent = null;
         this.gameObject.hideFlags = HideFlags.HideAndDontSave;
 
-        const string restartNotice = 
+        const string restartNotice =
             "\n!!! Game restart is required after changing this option !!!";
 
         configAddThrowUpgrade = Config.Bind(
@@ -78,7 +78,7 @@ public class Unremove : BaseUnityPlugin
             "Weird immortal yet harmless copy of Mentalist who doesn't\n" +
             "attack. It does spawn scary popups around you.\n" +
 
-            "Restart is not required if changed through MenuConfig mod.\n" +
+            "Restart is not required if changed through REPOConfig mod.\n" +
             "Singleplayer only because its main attraction (The Popups)\n" +
             "cannot be instantiated over Photon."
         );
@@ -99,10 +99,10 @@ public class Unremove : BaseUnityPlugin
         Harmony?.UnpatchSelf();
     }
 
-    internal static PrefabRef Ref(string resourcePath/* , bool log = true */)
+    internal static PrefabRef Ref(string resourcePath, bool log = true)
     {
         string prefabName = resourcePath.Split('/')[^1];
-        /* if (log) */ Logger.LogInfo(prefabName);
+        if (log) Logger.LogInfo(prefabName);
         return new()
         {
             resourcePath = resourcePath,
@@ -111,5 +111,5 @@ public class Unremove : BaseUnityPlugin
     }
 
     internal static IEnumerable<PrefabRef> Refs(params string[] resourcePaths)
-        => resourcePaths.Select(Ref);
+        => resourcePaths.Select(x => Ref(x));
 }

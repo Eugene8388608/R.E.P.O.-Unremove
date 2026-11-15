@@ -3,12 +3,15 @@ using UnityEngine;
 
 namespace Unremove;
 
+[HarmonyWrapSafe]
 [HarmonyPatch(typeof(EnemyDirector), nameof(EnemyDirector.Start))]
 static class EnemyDirectorPatch
 {
+    static EnemySetup virus = null!;
+
     static void Postfix(EnemyDirector __instance)
     {
-        if (!Unremove.Instance.configAddEnemyVirus.Value || SemiFunc.IsMultiplayer())
+        if (SemiFunc.IsMultiplayer() || !Unremove.Instance.configAddEnemyVirus.Value)
             return;
 
         if (!virus)
@@ -26,6 +29,4 @@ static class EnemyDirectorPatch
 
         __instance.enemiesDifficulty2.Add(virus);
     }
-
-    static EnemySetup virus = null!;
 }

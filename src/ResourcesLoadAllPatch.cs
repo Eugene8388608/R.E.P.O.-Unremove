@@ -9,11 +9,12 @@ namespace Unremove;
 //
 // Consider using Harmony Transpiler on StatsManager.LoadItemsFromFolder instead,
 // though this sounds more like a task for REPOLib
+[HarmonyWrapSafe]
 [HarmonyPatch(typeof(Resources), nameof(Resources.LoadAll), [typeof(string), typeof(System.Type)])]
 static class ResourcesLoadAllPatch
 {
     static Object[] Postfix(Object[] original, string path, System.Type systemTypeInstance)
-    {        
+    {
         if (systemTypeInstance != typeof(Item) || path.ToLowerInvariant() != "items/items")
             return original;
 

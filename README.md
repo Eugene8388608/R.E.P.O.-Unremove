@@ -17,6 +17,7 @@
 * Арктика - Грузовой центр
 * Арктика - Сектор Эс
 * Арктика - Обледеневший медблок
+* Магазин - Забаррикадированная дверь
 
 <details>
 <summary>Комнаты, доступные только через консоль отладки</summary>
@@ -35,7 +36,6 @@
 Сломанные:
 * Desert - DE - 3 - Minecart to hole
 * Desert - N - 1 - Employee Break Room
-* Shop - DE - Barricaded Door
 
 Отладочные:
 * M - Template
@@ -92,6 +92,7 @@ Rooms:
 * Arctic - M - 1 - Cargo Central
 * Arctic - N - 3 - Sector S
 * Arctic - P - 2 - Frozen Medbay
+* Shop - DE - Barricaded Door
 
 <details>
 <summary>Rooms available only through debug console</summary>
@@ -110,7 +111,6 @@ Unfinished:
 Unplayable:
 * Desert - DE - 3 - Minecart to hole
 * Desert - N - 1 - Employee Break Room
-* Shop - DE - Barricaded Door
 
 Debug:
 * M - Template

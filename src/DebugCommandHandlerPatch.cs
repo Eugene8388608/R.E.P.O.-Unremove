@@ -2,6 +2,7 @@
 
 namespace Unremove;
 
+[HarmonyWrapSafe]
 [HarmonyPatch(typeof(DebugCommandHandler), nameof(DebugCommandHandler.RegisterDevCommands))]
 static class DebugCommandHandlerPatch
 {
@@ -29,7 +30,7 @@ static class DebugCommandHandlerPatch
             "Level/Manor/Modules/Module - Manor - M - 2 - Whale room 1",
 
             // no valuables, holes in walls
-            "Level/Wizard/Modules/Module - Wizard - M - 1 - Crypts", 
+            "Level/Wizard/Modules/Module - Wizard - M - 1 - Crypts",
 
             // === unplayable ===
 
@@ -38,9 +39,6 @@ static class DebugCommandHandlerPatch
 
             // no doors, "we'll miss you, susan!"
             "Level/Desert/Modules/Module - Desert - N - 1 - Employee Break Room",
-
-            // didn't manage to break the door
-            "Level/Shop/Modules/Module - Shop - DE - Barricaded Door",
 
             // === debug ===
             "Level/Manor/Modules/Module - M - Template",
