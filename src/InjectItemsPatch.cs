@@ -10,8 +10,12 @@ namespace Unremove;
 // Consider using Harmony Transpiler on StatsManager.LoadItemsFromFolder instead,
 // though this sounds more like a task for REPOLib
 [HarmonyWrapSafe]
-[HarmonyPatch(typeof(Resources), nameof(Resources.LoadAll), [typeof(string), typeof(System.Type)])]
-static class ResourcesLoadAllPatch
+[HarmonyPatch(
+    typeof(Resources),
+    nameof(Resources.LoadAll),
+    [typeof(string), typeof(System.Type)]
+)]
+static class InjectItemsPatch
 {
     static Object[] Postfix(Object[] original, string path, System.Type systemTypeInstance)
     {
@@ -32,12 +36,18 @@ static class ResourcesLoadAllPatch
         );
 
         if (Unremove.Instance.configAddThrowUpgrade.Value)
-            removedItems = removedItems.Append(ThrowUpgradeItemFactory.Item);
+            removedItems = removedItems.Append(ThrowUpgradePatch.item.Instance);
+
+        if (Unremove.Instance.configAddHideyBox.Value)
+            removedItems = removedItems.Append(HideyBoxPatch.item.Instance);
+
+        if (Unremove.Instance.configAddBigCart.Value)
+            removedItems = removedItems.Append(BigCartPatch.item.Instance);
 
         var removedItemsArray = removedItems.ToArray();
 
         Unremove.Logger.LogInfo(
-            $"{removedItemsArray.Count()} disabled items: " +
+            removedItemsArray.Count() + " disabled items: " +
             string.Join(", ", removedItemsArray.Select(x => x.itemName))
         );
 

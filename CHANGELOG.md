@@ -1,3 +1,9 @@
+## [0.6.0](https://github.com/Eugene8388608/R.E.P.O.-Unremove/tree/v0.6.0) - 2026-11-22
+* Config option for unremoving Big C.A.R.T.
+* Config option for unremoving Hidey Box.
+* Config option for logging unremoved prefabs. Disabled by default to reduce log spam.
+* Fixing debug start rooms alongside regular debug modules. There are no debug start rooms as of R.E.P.O. v0.5.2 though.
+
 ## [0.5.0](https://github.com/Eugene8388608/R.E.P.O.-Unremove/tree/v0.5.0) - 2026-11-15
 * Promoted `Module - Shop - DE - Barricaded Door` to playable rooms.
 * Single Walkie Talkies now spawn with different colors, just like pairs of them.

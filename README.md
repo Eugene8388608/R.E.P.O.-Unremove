@@ -3,7 +3,9 @@
 <details>
 <summary>Русский 🇷🇺</summary>
 
-Мод для R.E.P.O. v0.5.1, который возвращает предметы, комнаты и одного монстра, отключенные, недоделанные или забытые разработчиками игры.
+[Пост о моде в R.E.P.O. Modding Discord](https://discord.com/channels/1344557689979670578/1569133560051408986)
+
+Мод для R.E.P.O. v0.5.2, который возвращает предметы, комнаты и одного монстра, отключенные, недоделанные или забытые разработчиками игры.
 
 Этот мод не содержит текстур, моделей, префабов или других ресурсов; он нужен только хосту *для большинства игровых объектов*.
 
@@ -64,6 +66,8 @@
 
 Покупные предметы, доступные после включения в конфиге мода:
 * Коробка улучшения броска (игроки без этого мода её видят, но взаимодействовать с ней не могут)
+* Большая тележка (игроки без этого мода видят кривую модель)
+* Коробка-укрытие (недоделанная модель)
 
 Монстры, доступные после включения в конфиге мода:
 * Вирус (неубиваемый, не поддерживает мультиплеер)
@@ -78,7 +82,9 @@
 <details open>
 <summary>English 🇺🇸</summary>
 
-R.E.P.O. v0.5.1 mod that restores rooms, shop items, one valuable and one enemy, which are disabled, unfinished or forgotten by game developers.
+[Mod post in R.E.P.O. Modding Discord](https://discord.com/channels/1344557689979670578/1569133560051408986)
+
+R.E.P.O. v0.5.2 mod that restores rooms, shop items, one valuable and one enemy, which are disabled, unfinished or forgotten by game developers.
 
 This mod contains no textures, models, prefabs or other resources. Only host needs it *for most game objects*.
 
@@ -139,6 +145,8 @@ Shop items:
 
 Shop items available after changing mod's config:
 * Throw Upgrade box (players without this mod see the upgrade box, but they can't interact with it)
+* Big C.A.R.T. (players without this mod see bad 3D model of it)
+* Hidey Box (unfinished model)
 
 Enemies available after changing mod's config:
 * Virus (immortal, doesn't support multiplayer)

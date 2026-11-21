@@ -4,13 +4,18 @@ namespace Unremove;
 
 [HarmonyWrapSafe]
 [HarmonyPatch(typeof(DebugCommandHandler), nameof(DebugCommandHandler.RegisterDevCommands))]
-static class DebugCommandHandlerPatch
+static class DebugModulesPatch
 {
     static void Postfix(DebugCommandHandler __instance)
     {
         if (Unremove.Instance.configTryFixDebugRefs.Value)
+        {
             foreach (var p in __instance.debugModules)
                 p.resourcePath ??= "Level/Debug/Modules/" + p.prefabName;
+
+            foreach (var p in __instance.debugStartRooms)
+                p.resourcePath ??= "Level/Debug/Start Room/" + p.prefabName;
+        }
 
         __instance.debugModules.AddRange(Unremove.Refs(
             // === pre v0.4.0 shop ===
